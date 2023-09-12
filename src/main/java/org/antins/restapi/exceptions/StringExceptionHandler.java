@@ -12,7 +12,7 @@ public class StringExceptionHandler {
         StringException stringException = new StringException(
                 stringEmptyException.getMessage(),
                 stringEmptyException.getCause(),
-                HttpStatus.NOT_FOUND
+                HttpStatus.BAD_REQUEST
         );
         return new ResponseEntity<>(stringException, stringException.getHttpStatus());
     }

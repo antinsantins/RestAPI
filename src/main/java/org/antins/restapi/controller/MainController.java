@@ -2,6 +2,8 @@ package org.antins.restapi.controller;
 
 import org.antins.restapi.exceptions.StringEmptyException;
 import org.antins.restapi.model.Symbol;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +18,7 @@ import java.util.stream.Collectors;
 @RestController
 public class MainController {
     @PostMapping
-    public List<Symbol> calculatingFrequency(@RequestBody Map<String, String> request) {
+    public ResponseEntity<List<Symbol>> calculatingFrequency(@RequestBody Map<String, String> request) {
         String str = request.get("str");
         if (str == null || str.isEmpty()) {
             throw new StringEmptyException("field is empty");
@@ -31,6 +33,6 @@ public class MainController {
                 .sorted(Comparator.comparingInt(Symbol::getAmount).reversed())
                 .collect(Collectors.toList());
 
-        return resaultList;
+        return new ResponseEntity<>(resaultList, HttpStatus.OK);
     }
 }
